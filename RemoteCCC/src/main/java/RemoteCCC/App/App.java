@@ -67,10 +67,11 @@ public class App {
 
 
         if(compileExecuteCovarageWithMaven(output_maven)){
-            String retXmlJacoco = readFileToString(Config.getJacocoXmlPath());//zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
-            response.setError(false);
+            String coverage = zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
+            
+		response.setError(false);
             response.setoutCompile(output_maven[0]);
-            response.setCoverage(retXmlJacoco);
+            response.setCoverage(coverage);
             
             //eliminare i file salvati
             deleteFile(underTestClassName, testingClassName);
@@ -89,11 +90,33 @@ public class App {
     }
 
 
- 
-    private static String readFileToString(String path) throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get(path));
-        String contents = new String(bytes);
-        return contents;
+     private String zipSiteFolderToJSON(String path) throws IOException {
+        String folderPath = Paths.get(path, "site").toString();
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ZipOutputStream zos = new ZipOutputStream(baos);
+    
+        Path folder = Paths.get(folderPath);
+        Files.walk(folder)
+                .filter(p -> !Files.isDirectory(p))
+                .forEach(p -> {
+                    try {
+                        Path relativePath = folder.relativize(p);
+                        ZipEntry zipEntry = new ZipEntry(relativePath.toString());
+                        zos.putNextEntry(zipEntry);
+                        zos.write(Files.readAllBytes(p));
+                        zos.closeEntry();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+    
+        zos.close();
+    
+        byte[] zipBytes = baos.toByteArray();
+        String encodedZip = Base64.getEncoder().encodeToString(zipBytes);
+    
+        return encodedZip;
     }
 
 
