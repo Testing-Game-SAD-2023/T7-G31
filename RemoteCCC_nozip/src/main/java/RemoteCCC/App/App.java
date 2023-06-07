@@ -70,7 +70,7 @@ public class App {
             String retXmlJacoco = readFileToString(Config.getJacocoXmlPath());//zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
             response.setError(false);
             response.setoutCompile(output_maven[0]);
-            response.setXmlJacoco(retXmlJacoco);
+            response.setCoverage(retXmlJacoco);
             
             //eliminare i file salvati
             deleteFile(underTestClassName, testingClassName);
@@ -80,7 +80,7 @@ public class App {
 
             response.setError(true);
             response.setoutCompile(output_maven[0]);
-            response.setXmlJacoco(null);
+            response.setCoverage(null);
             deleteFile(underTestClassName, testingClassName);
             return response;
         }
@@ -205,7 +205,7 @@ public class App {
 
         private Boolean error;
         private String outCompile;
-        private String xmlJacoco;
+        private String coverage;
 
 
         public Boolean getError(){
@@ -215,8 +215,8 @@ public class App {
         public String getOutCompile(){
             return outCompile;
         }
-        public String getXmlJscoco(){
-            return xmlJacoco;
+        public String getCoverage(){
+            return coverage;
         }
 
         public void setError(boolean error)
@@ -229,9 +229,9 @@ public class App {
             this.outCompile = outCompile;
         }
 
-        public void setXmlJacoco(String xmlJacoco)
+        public void setCoverage(String coverage)
         {
-            this.xmlJacoco = xmlJacoco;
+            this.coverage = coverage;
         }
 
 
