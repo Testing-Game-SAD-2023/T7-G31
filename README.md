@@ -17,3 +17,7 @@ Lanciato build.sh run o build.cmd run dovrebbe partire sul terminale l'applicazi
   "underTestClassCode": "public class Lola {\n    public int divide(int a, int b) {\n        if (b == 0) {\n            throw new ArithmeticException(\"Cannot divide by zero\");\n        }\n        return a / b;\n    }\n}\n"
 }
 
+
+
+## RemoteCCC
+Questa è una versione del codice dove però il ritorno della copertura è dato in formato zip passando tutti ifile necessari per aprire index.html dato dalla copertura di jacoco, mentre in quella no_zip è ritornato esclusivamente il file xml.
