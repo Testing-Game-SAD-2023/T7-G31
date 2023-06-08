@@ -67,7 +67,7 @@ public class App {
 
 
         if(compileExecuteCovarageWithMaven(output_maven)){
-            String retXmlJacoco = readFileToString(Config.getJacocoXmlPath());//zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
+            String retXmlJacoco = readFileToString(Config.getCoverageFolder());//zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
             response.setError(false);
             response.setoutCompile(output_maven[0]);
             response.setCoverage(retXmlJacoco);
