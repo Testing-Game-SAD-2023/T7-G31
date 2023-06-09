@@ -65,27 +65,23 @@ public class App {
 
         ResponseDTO response = new ResponseDTO();
 
+        
 
+        
         if(compileExecuteCovarageWithMaven(output_maven)){
             String retXmlJacoco = readFileToString(Config.getCoverageFolder());//zipSiteFolderToJSON(Config.getzipSiteFolderJSON()).toString();
             response.setError(false);
             response.setoutCompile(output_maven[0]);
             response.setCoverage(retXmlJacoco);
-            
-            //eliminare i file salvati
-            deleteFile(underTestClassName, testingClassName);
-            return response;
+
         }else
         {
-
             response.setError(true);
             response.setoutCompile(output_maven[0]);
-            response.setCoverage(null);
-            deleteFile(underTestClassName, testingClassName);
-            return response;
+            response.setCoverage(null);            
         }
-    
-    
+        deleteFile(underTestClassName, testingClassName);
+        return response;
     }
 
 
@@ -144,6 +140,7 @@ public class App {
         ret[0] = new String(buffer, StandardCharsets.UTF_8);
         if (exitCode == 0) {
             System.out.println("Maven clean compile executed successfully.");
+            ret[0] = null;
             return true;
         } else {
             System.out.println("Error executing Maven clean compile.");
