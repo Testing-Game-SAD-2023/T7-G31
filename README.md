@@ -5,9 +5,6 @@ Si utilizza maven per compilarlo , sotto windows si può lanciare il .cmd con il
 Dualmente su Mac/unix il comando build.sh
 
 
-## Attenzione
-I path in config.java in src/main/java/RemoteCCC sono scritti per UNIX per utilizzare il codice su windows bisogna commentarli e decommentare gli altri.
-
 ## Per provarlo...
 
 Lanciato build.sh run o build.cmd run dovrebbe partire sul terminale l'applicazione del server, a quel punto si può lanciare tramite postman una richiesta post con questo end-point compile-and-codecoverage in loopback : il body della richiesta deve essere fattoin Json come nell'esempio sottostante:
