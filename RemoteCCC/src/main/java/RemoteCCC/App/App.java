@@ -53,12 +53,12 @@ public class App {
         String underTestClassCode = request.getUnderTestClassCode();
         
         // Salvataggio dei due file su disco: occorre specificare il nome della classe, per la corretta compilazione
-        Path firstFilePath  = saveCodeToFile(testingClassName, testingClassCode, Config.getTestingClassPath());
-        Path secondFilePath = saveCodeToFile(underTestClassName, underTestClassCode, Config.getUnderTestClassPath());
+        saveCodeToFile(testingClassName, testingClassCode, Config.getTestingClassPath());
+        saveCodeToFile(underTestClassName, underTestClassCode, Config.getUnderTestClassPath());
 
         
         //Aggiunge la dichiarazione del package ai file java ricevuti.
-        addPackageDeclaration(firstFilePath, secondFilePath);
+        //addPackageDeclaration(firstFilePath, secondFilePath);
 
         //Output di ritorno del comando maven.
         String []output_maven={""};
@@ -93,13 +93,14 @@ public class App {
     }
 
 
-    /**
+    /*/**
      * Metodo per dichiarare i package all'interno dei file ".java".
      * @param file1path Path del primo file.
      * @param file2Path Path del secondo file.
      * @throws IOException Se ci sono errori I/O di lettura o scrittura su file.
      * @throws InterruptedException
      */
+    /* 
     private static void addPackageDeclaration(Path file1Path, Path file2Path) throws IOException {
         String packageDeclaration = Config.getpackageDeclaretion();
     
@@ -113,6 +114,8 @@ public class App {
         Files.write(file2Path, file2Content.getBytes(StandardCharsets.UTF_8));
     }
 
+    */
+    
     private void deleteFile(String underTestClassName, String testingClassName)throws IOException
     {
         File file1 = new File(Config.getUnderTestClassPath()+underTestClassName);
@@ -157,12 +160,14 @@ public class App {
      * @throws IOException Se ci sono errori I/O di lettura o scrittura su file.
      */
     private Path saveCodeToFile(String nameclass, String code, String path) throws IOException {
-
+        String packageDeclaration = Config.getpackageDeclaretion();
+        code = packageDeclaration + code;
         File tempFile = new File(path + nameclass);
         tempFile.deleteOnExit();
         try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write(code);
         }
+        
         return tempFile.toPath();
     }
    
